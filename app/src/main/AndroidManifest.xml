@@ -18,9 +18,16 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CanvasActivity"
+            android:exported="true"
+            android:label="@string/title_activity_canvas"
+            android:theme="@style/Theme.CloudyPaint"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

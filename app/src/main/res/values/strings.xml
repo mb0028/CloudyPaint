@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cloudy↝Paint</string>
+    <string name="title_activity_canvas">CanvasActivity</string>
 </resources>
