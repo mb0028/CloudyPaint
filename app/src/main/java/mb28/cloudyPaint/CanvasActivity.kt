@@ -34,6 +34,10 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.createBitmap
 import mb28.cloudyPaint.ui.theme.CloudyPaintTheme
 
+const val EXTRA_W = "image_width"
+const val EXTRA_H = "image_height"
+const val EXTRA_N = "image_name"
+
 class CanvasActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +45,10 @@ class CanvasActivity : ComponentActivity() {
         enableEdgeToEdge()
         window.isNavigationBarContrastEnforced = false
 
-        bitmap = createBitmap(600, 800)
+        width = intent.getFloatExtra(EXTRA_W, 800f)
+        height = intent.getFloatExtra(EXTRA_H, 800f)
+        name = intent.getStringExtra(EXTRA_N) ?: "Test"
+        bitmap = createBitmap(width.toInt(), height.toInt())
 
         setContent {
             CloudyPaintTheme {
@@ -86,16 +93,20 @@ class CanvasActivity : ComponentActivity() {
 
     var debugDrag by mutableStateOf("...")
 
+    lateinit var bitmap: Bitmap
+    var name = ""
+    var width = 600f
+    var height = 800f
+
     var paths = mutableStateMapOf<Int, Path>()
     var currentPathI by mutableIntStateOf(0)
     var currentPath by mutableStateOf(Path())
-    lateinit var bitmap: Bitmap
 
     @Composable
     fun CloudyCanvas() {
         Canvas(
             Modifier
-                .aspectRatio(3f / 4f).clip(RectangleShape)
+                .aspectRatio(width / height).clip(RectangleShape)
                 .background(Color.White)
                 .pointerInput(Unit) {
                     detectDragGestures(
